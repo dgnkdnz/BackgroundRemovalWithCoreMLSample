@@ -84,7 +84,10 @@ class ViewController: UIViewController {
             }
         }
         
-        let data = Data(buffer: UnsafeBufferPointer(start: &cubeRGB, count: cubeRGB.count))
+        var data = Data()
+        cubeRGB.withUnsafeBufferPointer { pointer in
+            data.append(pointer)
+        }
         
         let colorCubeFilter = CIFilter(name: "CIColorCube", parameters: ["inputCubeDimension": size, "inputCubeData": data])
         return colorCubeFilter
